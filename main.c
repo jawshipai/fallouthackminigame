@@ -349,9 +349,6 @@ int main()
     char* password = wordFromIndex(passwordIndex);
     fakeaddr = randomNum(0, 50000);
     
-    board[0] = '<';
-    board[1] = '>';
-    
     printBoard();
     
     int endGame = 0;
