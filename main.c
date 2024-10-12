@@ -351,6 +351,11 @@ int main()
     char* password = wordFromIndex(passwordIndex);
     fakeaddr = randomNum(0, 50000);
     
+    board[0]='<';
+    board[1]='>';
+    board[2]='<';
+    board[3]='>';
+    
     refreshScreen();
     
     int endGame = 0;
@@ -401,32 +406,28 @@ int main()
                 free(word);
             } else {
                 // handle symbol case
-                //printf("word isn't valid.\n");
                 sprintf(buffer, "> %s", input);
                 updateHistory(buffer);
                 int c = checkSymbol(lindex);
-                //sprintf(buffer, "%d", c);
-                //updateHistory(buffer);
                 if(!symbolUsed(lindex) && c != -1) {
                     int r = randomNum(0,4);
-                    if(!symbolUsed(lindex) && !r){
+                    if(!r){
                         tries = 4;
                         updateHistory("> TRIES RESET.");
                     } else {
                         if (!removeDud()){
-                            usedSymbol[u++] = lindex;
                             updateHistory("> DUD REMOVED.");
                         } else {
                             updateHistory("> ERROR.");
                         }
                         
                     }
+                    usedSymbol[u++] = lindex;
                 } else {
                     updateHistory("> ERROR.");
                 }
             }
         } else {
-            //printf("> ERROR.\n");
             sprintf(buffer, "> %s", input);
             updateHistory(buffer);
             updateHistory("> ERROR.");
