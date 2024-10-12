@@ -334,7 +334,9 @@ void clearScreen(){
 }
 
 void refreshScreen() {
-    clearScreen();
+    //clearScreen();
+    //printf("\033[H\033[J"); // move cursor back to top
+    printf("\033[1;1H\033[J");
     printBoard();
 }
 
@@ -349,7 +351,7 @@ int main()
     char* password = wordFromIndex(passwordIndex);
     fakeaddr = randomNum(0, 50000);
     
-    printBoard();
+    refreshScreen();
     
     int endGame = 0;
     
@@ -405,13 +407,13 @@ int main()
                 int c = checkSymbol(lindex);
                 //sprintf(buffer, "%d", c);
                 //updateHistory(buffer);
-                if(c != -1) {
+                if(!symbolUsed(lindex) && c != -1) {
                     int r = randomNum(0,4);
-                    if(!r){
+                    if(!symbolUsed(lindex) && !r){
                         tries = 4;
                         updateHistory("> TRIES RESET.");
                     } else {
-                        if (!removeDud() && !symbolUsed(lindex)){
+                        if (!removeDud()){
                             usedSymbol[u++] = lindex;
                             updateHistory("> DUD REMOVED.");
                         } else {
@@ -431,6 +433,7 @@ int main()
         }
         refreshScreen();
         if(endGame > 0) {
+	    printf("\n");
             return 0;
         }
     }
