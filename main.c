@@ -351,11 +351,6 @@ int main()
     char* password = wordFromIndex(passwordIndex);
     fakeaddr = randomNum(0, 50000);
     
-    board[0]='<';
-    board[1]='>';
-    board[2]='<';
-    board[3]='>';
-    
     refreshScreen();
     
     int endGame = 0;
@@ -376,22 +371,17 @@ int main()
         char* location = strstr(board, input);
         if (location != NULL) {
             int lindex = strlen(board)-strlen(location);
-            //printf("> STRING FOUND AT %d.\n",lindex);
             int wordIndex = checkWord(lindex);
             if(wordIndex != -1) {
                 // handle word case
-                
                 char* word = wordFromIndex(wordIndex);
                 sprintf(buffer, "> %s", word);
                 updateHistory(buffer);
                 int likeness = strsim(word, password);
                 if(likeness == strlen(password)) {
-                    //printf("> PASSWORD ACCEPTED.\n");
                     updateHistory("> PASSWORD ACCEPTED.");
                     endGame = 1;
                 } else {
-                    //printf("> ENTRY DENIED.\n");
-                    //printf("> LIKENESS= %d\n", likeness);
                     updateHistory("> ENTRY DENIED.");
                     sprintf(buffer, "> LIKENESS= %d", likeness);
                     updateHistory(buffer);
